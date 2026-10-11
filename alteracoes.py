@@ -176,7 +176,7 @@ def atualizar_estoque_compra(carrinho):
         )
 
 
-def registrar_compra():
+def registrar_compra(historico_vendas)::
     """
     Registra uma compra utilizando funções menores
     para cada responsabilidade.
@@ -204,5 +204,11 @@ def registrar_compra():
         return
 
     atualizar_estoque_compra(carrinho)
+
+    registrar_venda(
+        historico_vendas,
+        carrinho,
+        total_final
+    )
 
     print("Compra finalizada com sucesso.")
