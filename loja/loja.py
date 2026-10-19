@@ -11,26 +11,23 @@ from .operacoes import (
 )
 
 
-def listar_produtos_disponiveis():
-    """
-    Mostra os produtos que podem ser vendidos.
+# ============================================================
+# PRODUTOS E FUNÇÕES DO MENU
+# ============================================================
 
-    Usa o estoque atual e retorna só os produtos com preço e quantidade válidos.
-    """
+def listar_produtos_disponiveis():
     disponiveis = {}
+
     for nome, dados in produtos.items():
         if dados["preco"] is not None and dados["quantidade"] > 0:
             disponiveis[nome] = dados
+
     return disponiveis
 
 
 def consultar_produto_menu():
-    """
-    Faz a consulta de um produto pelo nome.
-
-    Pede o nome do produto ao usuário e mostra as informações dele na tela.
-    """
     nome = input("Digite o nome do produto: ")
+
     produto = consultar_produto(produtos, nome)
 
     if produto is None:
@@ -38,6 +35,7 @@ def consultar_produto_menu():
         return
 
     preco = produto["preco"]
+
     if preco is None:
         preco_texto = "Preço não informado"
     else:
@@ -49,161 +47,233 @@ def consultar_produto_menu():
 
 
 def aplicar_desconto_menu():
-    """
-    Pede um valor e aplica desconto.
-
-    O usuário informa o total e a porcentagem de desconto.
-    """
     try:
         total = float(input("Digite o total: "))
-        porcentagem = float(input("Digite a porcentagem de desconto: "))
-        resultado = aplicar_desconto(total, porcentagem)
-        print(f"Valor final com desconto: R$ {resultado:.2f}")
+        porcentagem = float(
+            input("Digite a porcentagem de desconto: ")
+        )
+
+        resultado = aplicar_desconto(
+            total,
+            porcentagem
+        )
+
+        print(
+            f"Valor final com desconto: "
+            f"R$ {resultado:.2f}"
+        )
+
     except Exception as erro:
         print(f"Erro: {erro}")
 
 
 def calcular_troco_menu():
-    """
-    Calcula o troco de uma compra.
-
-    Recebe o total da compra e o valor pago pelo cliente.
-    """
     try:
-        total = float(input("Digite o total da compra: "))
-        valor_pago = float(input("Digite o valor pago: "))
-        troco = calcular_troco(valor_pago, total)
+        total = float(
+            input("Digite o total da compra: ")
+        )
+
+        valor_pago = float(
+            input("Digite o valor pago: ")
+        )
+
+        troco = calcular_troco(
+            valor_pago,
+            total
+        )
+
         print(f"Troco: R$ {troco:.2f}")
+
     except Exception as erro:
         print(f"Erro: {erro}")
 
 
 def calcular_imposto_menu():
-    """
-    Calcula o imposto de um valor.
-
-    O usuário pode informar a taxa ou deixar o valor padrão de 10%.
-    """
     try:
-        total = float(input("Digite o valor total: "))
-        taxa_texto = input("Digite a taxa de imposto ou pressione Enter para 10%: ").strip()
+        total = float(
+            input("Digite o valor total: ")
+        )
+
+        taxa_texto = input(
+            "Digite a taxa de imposto "
+            "ou pressione Enter para 10%: "
+        ).strip()
 
         if taxa_texto == "":
             imposto = calcular_imposto(total)
+
         else:
             taxa = float(taxa_texto) / 100
-            imposto = calcular_imposto(total, taxa)
+
+            imposto = calcular_imposto(
+                total,
+                taxa
+            )
 
         print(f"Imposto: R$ {imposto:.2f}")
+
     except Exception as erro:
         print(f"Erro: {erro}")
 
 
 def calcular_frete_menu():
-    """
-    Calcula o frete da compra.
-
-    O usuário informa o valor total e o sistema calcula o frete.
-    """
     try:
-        total = float(input("Digite o valor total: "))
+        total = float(
+            input("Digite o valor total: ")
+        )
+
         frete = calcular_frete(total)
+
         print(f"Frete: R$ {frete:.2f}")
+
     except Exception as erro:
         print(f"Erro: {erro}")
 
 
 def validar_cpf_menu():
-    """
-    Valida um CPF digitado pelo usuário.
-
-    Mostra na tela se o CPF é válido ou não.
-    """
     cpf = input("Digite o CPF: ")
+
     if validar_cpf_cliente(cpf):
         print("CPF válido.")
+
     else:
         print("CPF inválido.")
 
 
 def calcular_total_menu():
-    """
-    Calcula o total de vários itens.
-
-    O usuário informa quantos itens quer somar, com preço e quantidade.
-    """
     try:
-        quantidade_itens = int(input("Quantos itens deseja calcular? "))
+        quantidade_itens = int(
+            input("Quantos itens deseja calcular? ")
+        )
+
         itens = []
 
         for i in range(quantidade_itens):
+
             print(f"Item {i + 1}")
-            preco = float(input("Preço: "))
-            quantidade = int(input("Quantidade: "))
-            itens.append({"preco": preco, "quantidade": quantidade})
+
+            preco = float(
+                input("Preço: ")
+            )
+
+            quantidade = int(
+                input("Quantidade: ")
+            )
+
+            itens.append(
+                {
+                    "preco": preco,
+                    "quantidade": quantidade
+                }
+            )
 
         total = calcular_total(itens)
-        print(f"Total calculado: R$ {total:.2f}")
+
+        print(
+            f"Total calculado: R$ {total:.2f}"
+        )
+
     except Exception as erro:
         print(f"Erro: {erro}")
 
 
 def calcular_parcelamento_menu():
-    """
-    Calcula o valor de cada parcela.
-
-    O usuário informa o total da compra e a quantidade de parcelas.
-    """
     try:
-        total = float(input("Digite o total da compra: "))
-        parcelas = int(input("Digite a quantidade de parcelas: "))
-        valor_parcela = calcular_parcelamento(total, parcelas)
-        print(f"{parcelas}x de R$ {valor_parcela:.2f}")
+        total = float(
+            input("Digite o total da compra: ")
+        )
+
+        parcelas = int(
+            input("Digite a quantidade de parcelas: ")
+        )
+
+        valor_parcela = calcular_parcelamento(
+            total,
+            parcelas
+        )
+
+        print(
+            f"{parcelas}x de "
+            f"R$ {valor_parcela:.2f}"
+        )
+
     except Exception as erro:
         print(f"Erro: {erro}")
 
 
-def registrar_compra():
-    """
-    Registra uma compra com itens do estoque.
+# ============================================================
+# REFATORAÇÃO DO REGISTRO DE COMPRA
+# ============================================================
 
-    Monta o carrinho, calcula valores finais e faz a baixa no estoque.
-    """
+def montar_carrinho():
+
     disponiveis = listar_produtos_disponiveis()
 
     if not disponiveis:
-        print("Não há produtos disponíveis para venda.")
-        return
+        print(
+            "Não há produtos disponíveis para venda."
+        )
+        return []
 
     print("\nProdutos disponíveis:")
+
     for nome, dados in disponiveis.items():
-        print(f"- {nome} | R$ {dados['preco']:.2f} | Estoque: {dados['quantidade']}")
+        print(
+            f"- {nome} | "
+            f"R$ {dados['preco']:.2f} | "
+            f"Estoque: {dados['quantidade']}"
+        )
 
     carrinho = []
 
     while True:
-        nome = input("\nDigite o nome do produto (Enter para finalizar): ").strip()
+
+        nome = input(
+            "\nDigite o nome do produto "
+            "(Enter para finalizar): "
+        ).strip()
+
         if nome == "":
             break
 
-        produto = consultar_produto(produtos, nome)
+        produto = consultar_produto(
+            produtos,
+            nome
+        )
 
-        if produto is None or produto["preco"] is None or produto["quantidade"] <= 0:
-            print("Produto não encontrado ou indisponível.")
+        if (
+            produto is None
+            or produto["preco"] is None
+            or produto["quantidade"] <= 0
+        ):
+            print(
+                "Produto não encontrado "
+                "ou indisponível."
+            )
             continue
 
         try:
-            quantidade = int(input("Digite a quantidade: "))
+            quantidade = int(
+                input("Digite a quantidade: ")
+            )
+
         except ValueError:
             print("Quantidade inválida.")
             continue
 
         if quantidade <= 0:
-            print("A quantidade deve ser maior que zero.")
+            print(
+                "A quantidade deve ser "
+                "maior que zero."
+            )
             continue
 
         if quantidade > produto["quantidade"]:
-            print(f"Estoque insuficiente. Disponível: {produto['quantidade']}")
+            print(
+                "Estoque insuficiente. "
+                f"Disponível: "
+                f"{produto['quantidade']}"
+            )
             continue
 
         carrinho.append(
@@ -214,68 +284,274 @@ def registrar_compra():
             }
         )
 
-    if not carrinho:
-        print("Nenhum item foi adicionado ao carrinho.")
-        return
+    return carrinho
+
+
+def calcular_valores_compra(carrinho):
 
     subtotal = calcular_total(carrinho)
-    print(f"\nSubtotal: R$ {subtotal:.2f}")
+
+    print(
+        f"\nSubtotal: R$ {subtotal:.2f}"
+    )
 
     try:
-        desconto = float(input("Digite a porcentagem de desconto (0 para nenhum): "))
-        subtotal = aplicar_desconto(subtotal, desconto)
+        desconto = float(
+            input(
+                "Digite a porcentagem de desconto "
+                "(0 para nenhum): "
+            )
+        )
+
+        subtotal = aplicar_desconto(
+            subtotal,
+            desconto
+        )
+
     except Exception:
-        print("Desconto inválido. Seguindo sem desconto.")
+        print(
+            "Desconto inválido. "
+            "Seguindo sem desconto."
+        )
 
     imposto = calcular_imposto(subtotal)
+
     frete = calcular_frete(subtotal)
-    total_final = round(subtotal + imposto + frete, 2)
 
-    print(f"Total com desconto: R$ {subtotal:.2f}")
-    print(f"Imposto: R$ {imposto:.2f}")
-    print(f"Frete: R$ {frete:.2f}")
-    print(f"Total final: R$ {total_final:.2f}")
+    total_final = round(
+        subtotal + imposto + frete,
+        2
+    )
 
-    cpf_opcao = input("Deseja colocar CPF na nota? (s/n): ").strip().lower()
+    print(
+        f"Total com desconto: "
+        f"R$ {subtotal:.2f}"
+    )
+
+    print(
+        f"Imposto: R$ {imposto:.2f}"
+    )
+
+    print(
+        f"Frete: R$ {frete:.2f}"
+    )
+
+    print(
+        f"Total final: R$ {total_final:.2f}"
+    )
+
+    return total_final
+
+
+def solicitar_cpf():
+
+    cpf_opcao = input(
+        "Deseja colocar CPF na nota? (s/n): "
+    ).strip().lower()
+
     if cpf_opcao == "s":
-        cpf = input("Digite o CPF: ")
+
+        cpf = input(
+            "Digite o CPF: "
+        )
+
         if validar_cpf_cliente(cpf):
             print("CPF válido.")
+
         else:
             print("CPF inválido.")
 
-    forma = input("Deseja parcelar? (s/n): ").strip().lower()
+
+def processar_pagamento(total_final):
+
+    forma = input(
+        "Deseja parcelar? (s/n): "
+    ).strip().lower()
 
     if forma == "s":
+
         try:
-            parcelas = int(input("Digite a quantidade de parcelas: "))
-            valor_parcela = calcular_parcelamento(total_final, parcelas)
-            print(f"{parcelas}x de R$ {valor_parcela:.2f}")
+            parcelas = int(
+                input(
+                    "Digite a quantidade de parcelas: "
+                )
+            )
+
+            valor_parcela = calcular_parcelamento(
+                total_final,
+                parcelas
+            )
+
+            print(
+                f"{parcelas}x de "
+                f"R$ {valor_parcela:.2f}"
+            )
+
         except Exception as erro:
-            print(f"Erro no parcelamento: {erro}")
+            print(
+                f"Erro no parcelamento: {erro}"
+            )
+
+            return False
+
     else:
+
         try:
-            valor_pago = float(input("Digite o valor pago: "))
-            troco = calcular_troco(valor_pago, total_final)
-            print(f"Troco: R$ {troco:.2f}")
+            valor_pago = float(
+                input("Digite o valor pago: ")
+            )
+
+            troco = calcular_troco(
+                valor_pago,
+                total_final
+            )
+
+            print(
+                f"Troco: R$ {troco:.2f}"
+            )
+
         except Exception as erro:
-            print(f"Erro no pagamento: {erro}")
-            return
+            print(
+                f"Erro no pagamento: {erro}"
+            )
+
+            return False
+
+    return True
+
+
+def atualizar_estoque_compra(carrinho):
 
     for item in carrinho:
-        produtos[item["nome"]]["quantidade"] -= item["quantidade"]
 
-    print("Compra finalizada com sucesso.")
+        produtos[item["nome"]]["quantidade"] -= (
+            item["quantidade"]
+        )
 
+
+# ============================================================
+# HISTÓRICO DE VENDAS
+# ============================================================
+
+def registrar_venda(
+    historico_vendas,
+    carrinho,
+    total_final
+):
+
+    venda = {
+        "itens": [
+            item.copy()
+            for item in carrinho
+        ],
+        "total": total_final,
+    }
+
+    historico_vendas.append(venda)
+
+
+def exibir_historico_vendas(
+    historico_vendas
+):
+
+    if not historico_vendas:
+
+        print(
+            "\nNenhuma venda registrada."
+        )
+
+        return
+
+    print(
+        "\n==== HISTÓRICO DE VENDAS ===="
+    )
+
+    for numero, venda in enumerate(
+        historico_vendas,
+        start=1
+    ):
+
+        print(
+            f"\nVenda {numero}"
+        )
+
+        for item in venda["itens"]:
+
+            print(
+                f"- {item['nome']} | "
+                f"Quantidade: "
+                f"{item['quantidade']} | "
+                f"Preço: "
+                f"R$ {item['preco']:.2f}"
+            )
+
+        print(
+            f"Total: R$ "
+            f"{venda['total']:.2f}"
+        )
+
+
+# ============================================================
+# REGISTRO DA COMPRA
+# ============================================================
+
+def registrar_compra(
+    historico_vendas
+):
+
+    carrinho = montar_carrinho()
+
+    if not carrinho:
+
+        print(
+            "Nenhum item foi adicionado "
+            "ao carrinho."
+        )
+
+        return
+
+    total_final = calcular_valores_compra(
+        carrinho
+    )
+
+    solicitar_cpf()
+
+    pagamento_realizado = processar_pagamento(
+        total_final
+    )
+
+    if not pagamento_realizado:
+        return
+
+    atualizar_estoque_compra(
+        carrinho
+    )
+
+    registrar_venda(
+        historico_vendas,
+        carrinho,
+        total_final
+    )
+
+    print(
+        "Compra finalizada com sucesso."
+    )
+
+
+# ============================================================
+# MENU PRINCIPAL DA LOJA
+# ============================================================
 
 def sistema_loja():
-    """
-    Abre o menu principal da loja.
 
-    Mostra as funções da parte de vendas e fica rodando até o usuário voltar.
-    """
+    historico_vendas = []
+
     while True:
-        print("\n==== SISTEMA DA LOJA ====")
+
+        print(
+            "\n==== SISTEMA DA LOJA ===="
+        )
+
         print("1 - Consultar produto")
         print("2 - Aplicar desconto")
         print("3 - Calcular troco")
@@ -285,29 +561,61 @@ def sistema_loja():
         print("7 - Calcular total")
         print("8 - Calcular parcelamento")
         print("9 - Registrar compra")
+        print("10 - Histórico de vendas")
         print("0 - Voltar")
 
-        opcao = input("Escolha uma opção: ").strip()
+        opcao = input(
+            "Escolha uma opção: "
+        ).strip()
 
         if opcao == "1":
+
             consultar_produto_menu()
+
         elif opcao == "2":
+
             aplicar_desconto_menu()
+
         elif opcao == "3":
+
             calcular_troco_menu()
+
         elif opcao == "4":
+
             calcular_imposto_menu()
+
         elif opcao == "5":
+
             calcular_frete_menu()
+
         elif opcao == "6":
+
             validar_cpf_menu()
+
         elif opcao == "7":
+
             calcular_total_menu()
+
         elif opcao == "8":
+
             calcular_parcelamento_menu()
+
         elif opcao == "9":
-            registrar_compra()
+
+            registrar_compra(
+                historico_vendas
+            )
+
+        elif opcao == "10":
+
+            exibir_historico_vendas(
+                historico_vendas
+            )
+
         elif opcao == "0":
+
             break
+
         else:
+
             print("Opção inválida.")
